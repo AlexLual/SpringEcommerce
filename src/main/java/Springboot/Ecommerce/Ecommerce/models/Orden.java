@@ -1,0 +1,106 @@
+package Springboot.Ecommerce.Ecommerce.models;
+
+import jakarta.persistence.*;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "ordenes")
+public class Orden {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String numero;
+    private Date fechaCreacion;
+    private Date fechaRecibida;
+    private Double Total;
+
+
+
+    @ManyToOne
+    private Usuarios usuarios;
+    @OneToOne(mappedBy = "orden")
+    private DetalleOrden detalleOrden;
+
+//Construtores
+
+    public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida) {
+        this.id = id;
+        this.numero = numero;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaRecibida = fechaRecibida;
+    }
+
+    public Orden() {
+    }
+// Getter and Setter
+public Double getTotal() {
+    return Total;
+}
+
+    public void setTotal(Double total) {
+        Total = total;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaRecibida() {
+        return fechaRecibida;
+    }
+
+    public void setFechaRecibida(Date fechaRecibida) {
+        this.fechaRecibida = fechaRecibida;
+    }
+
+    public Usuarios getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Usuarios usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public DetalleOrden getDetalleOrden() {
+        return detalleOrden;
+    }
+
+    public void setDetalleOrden(DetalleOrden detalleOrden) {
+        this.detalleOrden = detalleOrden;
+    }
+
+    //ToString
+
+
+    @Override
+    public String toString() {
+        return "Orden{" +
+                "id=" + id +
+                ", numero='" + numero + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
+                ", fechaRecibida=" + fechaRecibida +
+                '}';
+    }
+}

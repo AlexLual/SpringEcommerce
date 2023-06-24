@@ -3,6 +3,8 @@ package Springboot.Ecommerce.Ecommerce.controllers;
 import Springboot.Ecommerce.Ecommerce.models.DetalleOrden;
 import Springboot.Ecommerce.Ecommerce.models.Orden;
 import Springboot.Ecommerce.Ecommerce.models.Producto;
+import Springboot.Ecommerce.Ecommerce.models.Usuarios;
+import Springboot.Ecommerce.Ecommerce.services.IUsuarioService;
 import Springboot.Ecommerce.Ecommerce.services.ProductoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ public class HomeController {
     private final Logger log = LoggerFactory.getLogger(HomeController.class);
     @Autowired
     private ProductoService productoService;
+    @Autowired
+    private IUsuarioService usuarioService;
+
     //Para al,macenar detalles order
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
 
@@ -104,7 +109,14 @@ public class HomeController {
         return "/usuario/carrito";
     }
 @GetMapping("/order")
-    public String order(){
+    public String order(Model model){
+
+    Usuarios usuarios= usuarioService.findById(1).get();
+
+    model.addAttribute("cart", detalles);
+    model.addAttribute("orden", orden);
+    model.addAttribute("usuario", usuarios);
+
         return "usuario/resumenorden";
 }
 

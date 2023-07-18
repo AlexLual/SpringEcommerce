@@ -4,6 +4,8 @@ import Springboot.Ecommerce.Ecommerce.models.DetalleOrden;
 import Springboot.Ecommerce.Ecommerce.models.Orden;
 import Springboot.Ecommerce.Ecommerce.models.Producto;
 import Springboot.Ecommerce.Ecommerce.models.Usuarios;
+import Springboot.Ecommerce.Ecommerce.services.IDetalleOrdenService;
+import Springboot.Ecommerce.Ecommerce.services.IOrdenService;
 import Springboot.Ecommerce.Ecommerce.services.IUsuarioService;
 import Springboot.Ecommerce.Ecommerce.services.ProductoService;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,10 @@ public class HomeController {
     private ProductoService productoService;
     @Autowired
     private IUsuarioService usuarioService;
+    @Autowired
+    private IDetalleOrdenService iDetalleOrdenService;
+    @Autowired
+    private IOrdenService iOrdenService;
 
     //Para al,macenar detalles order
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -121,4 +128,30 @@ public class HomeController {
 }
 
 
+//Guardar de la orden
+@GetMapping("/saveorder")
+    public String saverOrder(){
+    Date fechaCreacion = new Date();
+    orden.setFechaCreacion(fechaCreacion);
+    orden.setNumero(iOrdenService.generarNumeroOrden());
+
+    //Usuario
+    Usuarios usuarios= usuarioService.findById(1).get();
+    orden.setUsuarios(usuarios);
+    iOrdenService.save(orden);
+
+
+    //Guardar detalle
+    for (DetalleOrden dt: detalles){
+        dt.setOrden(orden);
+        iDetalleOrdenService.save(dt);
+    }
+    //Limpiar lista
+    orden =new Orden();
+    detalles.clear();
+
+
+
+        return "redirect:/ ";
+}
 }

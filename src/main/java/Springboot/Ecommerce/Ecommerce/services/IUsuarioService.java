@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface IUsuarioService {
     Optional<Usuarios> findById(Integer id);
+    Usuarios save (Usuarios usuarios);
 }

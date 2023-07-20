@@ -2,8 +2,10 @@ package Springboot.Ecommerce.Ecommerce.controllers;
 
 import Springboot.Ecommerce.Ecommerce.models.Producto;
 import Springboot.Ecommerce.Ecommerce.models.Usuarios;
+import Springboot.Ecommerce.Ecommerce.services.IUsuarioService;
 import Springboot.Ecommerce.Ecommerce.services.ProductoService;
 import Springboot.Ecommerce.Ecommerce.services.UploadFileService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ private ProductoService productoService;
 
 @Autowired
 private UploadFileService upload;
+@Autowired
+private IUsuarioService iUsuarioService;
 
     @GetMapping("")
     public String show(Model model){
@@ -37,9 +41,9 @@ private UploadFileService upload;
 
 
     @PostMapping("/save")
-    public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
+    public String save(Producto producto, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
         LOGGER.info("Este es el objecto producto{}",producto);
-        Usuarios u = new Usuarios(1,"","","","","","","");
+        Usuarios u = iUsuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString() )).get();
         producto.setUsuarios(u);
 //imagen
         if (producto.getId()==null){

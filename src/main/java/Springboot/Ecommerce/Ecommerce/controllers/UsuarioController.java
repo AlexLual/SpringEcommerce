@@ -21,7 +21,7 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService iUsuarioService;
 
-
+// /usuario/registro
     @GetMapping("/registro")
     public String create(){
         return "usuario/registro";

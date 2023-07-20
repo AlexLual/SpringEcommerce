@@ -33,7 +33,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" th:href="@{usuario/login}">Login</a>
+            <a class="nav-link" th:href="@{/usuario/login}">Login</a>
           </li>
         </ul>
       </div>    
@@ -76,18 +76,14 @@
         </div>      
       </div>    
     </form>
-    <a th:
-       href="registro.html" class="card-link">Si aún no tiene cuenta aqui puede registrarse</a>
+    <a th:href="@{/usuario/registro}" class="card-link">Si aún no tiene cuenta aqui puede registrarse</a>
   </div>
   <!-- /.container -->
 
   <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2020</p>
-    </div>
-    <!-- /.container -->
-  </footer>
+  <div th:include="usuario/template_usuario.html::footer">
+
+  </div>
 
   <!-- Bootstrap core JavaScript -->
   <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

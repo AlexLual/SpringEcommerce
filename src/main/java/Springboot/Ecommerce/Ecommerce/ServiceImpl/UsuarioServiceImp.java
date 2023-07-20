@@ -21,4 +21,9 @@ public class UsuarioServiceImp implements IUsuarioService {
     public Usuarios save(Usuarios usuarios) {
         return usuarioRepository.save(usuarios);
     }
+
+    @Override
+    public Optional<Usuarios> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
 }
